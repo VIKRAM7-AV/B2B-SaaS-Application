@@ -27,5 +27,10 @@ class AuthUser:
     @property
     def can_update(self,permission:str)->bool:
         return self.has_permission("org:tasks:update")
-    
-        
+
+    def convert_httpx_request(fastapi_request:reqquest) -> httpx.Request:
+        return httpx.Request(
+            methods=fastapi_request.method,
+            url=str(fastapi_request.url),
+            headers=dict(fastapi_request.headers),
+        )    
